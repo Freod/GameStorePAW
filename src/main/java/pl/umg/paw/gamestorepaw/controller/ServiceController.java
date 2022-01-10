@@ -1,13 +1,14 @@
 package pl.umg.paw.gamestorepaw.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.umg.paw.gamestorepaw.model.Service;
 import pl.umg.paw.gamestorepaw.service.impl.ServiceServiceImpl;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/services")
 public class ServiceController {
     @Autowired

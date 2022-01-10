@@ -7,8 +7,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -21,8 +24,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder getPasswordEncoder(){
-        return new BCryptPasswordEncoder();
+    public PasswordEncoder passwordEncoder() {
+        return new PasswordEncoder() {
+            @Override
+            public String encode(CharSequence charSequence) {
+                return getMd5(charSequence.toString());
+            }
+
+            @Override
+            public boolean matches(CharSequence charSequence, String s) {
+                return getMd5(charSequence.toString()).equals(s);
+            }
+        };
+    }
+
+    public static String getMd5(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(input.getBytes());
+            BigInteger no = new BigInteger(1, messageDigest);
+            String hashtext = no.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        }
+        catch (NoSuchAlgorithmException e) {
+            System.out.println("Exception thrown"
+                    + " for incorrect algorithm: " + e);
+            return null;
+        }
     }
 
     @Override
@@ -31,7 +62,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users/**").hasAuthority("ADMIN")
                 .antMatchers("/games/add", "/games/delete", "/games/update", "/services/list", "/services/delete").hasAnyAuthority("EMPLOYEE", "ADMIN")
                 .antMatchers("/services/add", "/games/buy", "/games/sell").hasAnyAuthority("USER", "EMPLOYEE", "ADMIN")
-                .antMatchers("/", "/users/add","/games/list").permitAll()
-                .and().formLogin();
+                .antMatchers("/**", "/users/add","/games/list","/register").permitAll()
+                .and().formLogin()
+                .and().csrf().disable();
     }
 }

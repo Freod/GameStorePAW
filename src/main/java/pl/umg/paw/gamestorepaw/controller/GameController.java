@@ -1,21 +1,22 @@
 package pl.umg.paw.gamestorepaw.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.umg.paw.gamestorepaw.model.Game;
 import pl.umg.paw.gamestorepaw.service.impl.GameServiceImpl;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/games")
 public class GameController {
     @Autowired
     private GameServiceImpl service;
 
-    @GetMapping(value = "/list")
-    public List<Game> getAllGames() {
-        return service.findAll();
+    @GetMapping("/list")
+    public String getAllGames() {
+        return "/games/list";
     }
 
     @PostMapping(value = "/add")
