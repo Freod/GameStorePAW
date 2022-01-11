@@ -5,6 +5,9 @@
     <title>Hello page</title>
 </head>
 <body>
+    <div id="header">
+        <jsp:include page="navbar.jsp"/>
+    </div>
     <h1>Hello there <%= LocalTime.now()%></h1>
 </body>
 </html>

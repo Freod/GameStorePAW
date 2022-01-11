@@ -62,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users/**").hasAuthority("ADMIN")
                 .antMatchers("/games/add", "/games/delete", "/games/update", "/services/list", "/services/delete").hasAnyAuthority("EMPLOYEE", "ADMIN")
                 .antMatchers("/services/add", "/games/buy", "/games/sell").hasAnyAuthority("USER", "EMPLOYEE", "ADMIN")
-                .antMatchers("/**", "/users/add","/games/list","/register").permitAll()
+                .antMatchers("/","/games/list","/register", "/login").permitAll()
                 .and().formLogin()
                 .and().csrf().disable();
     }

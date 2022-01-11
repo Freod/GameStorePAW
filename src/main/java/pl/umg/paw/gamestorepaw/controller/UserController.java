@@ -8,6 +8,8 @@ import pl.umg.paw.gamestorepaw.model.User;
 import pl.umg.paw.gamestorepaw.repository.UserRepository;
 import pl.umg.paw.gamestorepaw.service.impl.UserServiceImpl;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/users")
 public class UserController {
@@ -17,22 +19,31 @@ public class UserController {
     @Autowired
     private UserRepository repository;
 
-    @RequestMapping(path = "/list", method = RequestMethod.GET)
+    @GetMapping("/list")
     public String getAllUsers(Model model) {
         model.addAttribute("users", repository.findAll());
         return "/users/list";
     }
 
-    @PutMapping(value = "/update/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User user) {
-        //TODO:exceptions
-        return service.update(user);
+    @GetMapping("/edit/{id}")
+    public String getUser(@PathVariable Long id, Model model) {
+        Optional<User> user = service.getById(id);
+        model.addAttribute("user", repository.findAll());
+        return "/users/edit";
     }
 
-    @DeleteMapping(value = "/delete/{id}")
-    public void deleteUser(@PathVariable Long id) {
+    @PostMapping("/edit/{id}")
+    public void editUser(@PathVariable Long id, User user) {
+        System.out.println(id);
+        System.out.println(user);
+//        return service.update(user);
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteUser(@PathVariable Long id) {
         if (service.getById(id).isPresent()) {
             service.deleteById(id);
         }
+        return "redirect:/users/list";
     }
 }
