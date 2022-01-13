@@ -12,9 +12,6 @@ import pl.umg.paw.gamestorepaw.service.impl.UserServiceImpl;
 @RequestMapping("/users")
 public class UserController {
     @Autowired
-    private UserServiceImpl service;
-
-    @Autowired
     private UserRepository repository;
 
     @GetMapping("/list")
@@ -32,15 +29,14 @@ public class UserController {
 
     @PostMapping("/edit/{id}")
     public String editUser(@PathVariable Long id, User user) {
-        System.out.println(user);
-//        return service.update(user);
+        repository.save(user);
         return "redirect:/users/list";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable Long id) {
-        if (service.getById(id).isPresent()) {
-            service.deleteById(id);
+        if (repository.findById(id).isPresent()) {
+            repository.deleteById(id);
         }
         return "redirect:/users/list";
     }

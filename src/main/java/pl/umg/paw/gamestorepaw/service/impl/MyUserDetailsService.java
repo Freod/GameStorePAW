@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import pl.umg.paw.gamestorepaw.repository.UserRepository;
 import pl.umg.paw.gamestorepaw.security.MyUserDetails;
 import pl.umg.paw.gamestorepaw.model.User;
 
@@ -13,11 +14,11 @@ import java.util.Optional;
 @Service
 public class MyUserDetailsService implements UserDetailsService {
     @Autowired
-    UserServiceImpl service;
+    UserRepository repository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = service.findByEmail(username);
+        Optional<User> user = repository.findByEmail(username);
 
         user.orElseThrow(() -> new UsernameNotFoundException("Not found:" + username));
 
