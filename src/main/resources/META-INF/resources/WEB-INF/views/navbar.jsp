@@ -45,11 +45,6 @@
                     <a class="nav-link" href="/users/list">Manage users</a>
                 </li>
             </sec:authorize>
-            <sec:authorize url="/users/account">
-                <li class="nav-item">
-                    <a class="nav-link" href="/payment/cart">Cart</a>
-                </li>
-            </sec:authorize>
             <sec:authorize url="/payment/cart">
                 <li class="nav-item">
                     <a class="nav-link" href="/payment/cart">Cart</a>

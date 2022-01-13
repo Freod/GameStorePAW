@@ -3,36 +3,36 @@ package pl.umg.paw.gamestorepaw.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import pl.umg.paw.gamestorepaw.model.Service;
-import pl.umg.paw.gamestorepaw.service.impl.ServiceServiceImpl;
+import pl.umg.paw.gamestorepaw.model.Repair;
+import pl.umg.paw.gamestorepaw.service.RepairService;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/services")
-public class ServiceController {
+public class RepairController {
     @Autowired
-    private ServiceServiceImpl service;
+    private RepairService service;
 
     @GetMapping(value = "/list")
-    public List<Service> getAllServices() {
+    public List<Repair> getAllRepairs() {
         return service.findAll();
     }
 
     @PostMapping(value = "/add")
-    public Service saveService(@RequestBody Service serviceModel) {
+    public void saveRepair(Repair repair) {
         //TODO:exceptions
-        return service.save(serviceModel);
+        service.save(repair);
     }
 
     @PutMapping(value = "/update/{id}")
-    public Service updateService(@PathVariable Long id, @RequestBody Service serviceModel) {
+    public void updateRepair(@PathVariable Long id, Repair repair) {
         //TODO:exceptions
-        return service.update(serviceModel);
+        service.update(repair);
     }
 
     @DeleteMapping(value = "/delete/{id}")
-    public void deleteService(@PathVariable Long id) {
+    public void deleteRepair(@PathVariable Long id) {
         if (service.getById(id).isPresent()) {
             service.deleteById(id);
         }

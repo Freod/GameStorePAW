@@ -4,15 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.umg.paw.gamestorepaw.model.Game;
-import pl.umg.paw.gamestorepaw.service.impl.GameServiceImpl;
-
-import java.util.List;
+import pl.umg.paw.gamestorepaw.service.GameService;
 
 @Controller
 @RequestMapping("/games")
 public class GameController {
     @Autowired
-    private GameServiceImpl service;
+    private GameService service;
 
     @GetMapping("/list")
     public String getAllGames() {
@@ -20,15 +18,15 @@ public class GameController {
     }
 
     @PostMapping(value = "/add")
-    public Game saveGame(@RequestBody Game game) {
+    public void saveGame(@RequestBody Game game) {
         //TODO:exceptions
-        return service.save(game);
+        service.save(game);
     }
 
     @PutMapping(value = "/update/{id}")
-    public Game updateGame(@PathVariable Long id, @RequestBody Game game) {
+    public void updateGame(@PathVariable Long id, @RequestBody Game game) {
         //TODO:exceptions
-        return service.update(game);
+        service.update(game);
     }
 
     @DeleteMapping(value = "/delete/{id}")

@@ -3,20 +3,17 @@ package pl.umg.paw.gamestorepaw.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "service")
-public class Service {
+@Table(name = "repair")
+public class Repair {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "service_id")
+    @Column(name = "repair_id")
     private Long id;
-    @Column(name="service_title")
+    @Column(name="repair_title")
     private String title;
-    @Column(name="service_description")
+    @Column(name="repair_description")
     private String description;
-    //TODO:Address
-//    @Column(name="service_title")
-//    private Address address;
-    @Column(name="service_packageNumber")
+    @Column(name="repair_packageNumber")
     private String packageNumber;
 
     public Long getId() {

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.umg.paw.gamestorepaw.model.User;
-import pl.umg.paw.gamestorepaw.service.impl.UserServiceImpl;
+import pl.umg.paw.gamestorepaw.service.UserService;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -13,7 +13,7 @@ import java.security.NoSuchAlgorithmException;
 @Controller
 public class RegisterController {
     @Autowired
-    private UserServiceImpl service;
+    private UserService service;
 
     @GetMapping(value = "/register")
     public String showRegister() {
@@ -21,12 +21,12 @@ public class RegisterController {
     }
 
     @PostMapping(value = "/register")
-    public User getRegister(User user) throws NoSuchAlgorithmException {
+    public void getRegister(User user) throws NoSuchAlgorithmException {
         user.setActive(true);
         user.setRole("USER");
         String password = hash(user.getPassword());
         user.setPassword(password);
-        return service.save(user);
+        service.save(user);
     }
 
     public String hash(String password) throws NoSuchAlgorithmException {

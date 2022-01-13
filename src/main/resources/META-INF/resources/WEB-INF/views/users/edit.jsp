@@ -9,7 +9,7 @@
 <div id="header">
     <jsp:include page="../navbar.jsp"/>
 </div>
-<div class="container">
+<div class="container content">
     <c:forEach items="${users}" var="user">
         <form class="form-signin" id="signupForm" method="post" action="/users/edit/${user.get().id}">
                 <%--<form class="form-signin" id="signupForm" method="post" action="/users/edit">--%>

@@ -1,4 +1,4 @@
-package pl.umg.paw.gamestorepaw.security;
+package pl.umg.paw.gamestorepaw.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
