@@ -1,6 +1,7 @@
 package pl.umg.paw.gamestorepaw.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="game")
@@ -15,6 +16,8 @@ public class Game {
     private String platform;
     @Column(name="game_price")
     private double price;
+    @OneToMany
+    private List<Image> images;
 
     public Long getId() {
         return id;

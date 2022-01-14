@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.umg.paw.gamestorepaw.model.Game;
 import pl.umg.paw.gamestorepaw.repository.GameRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,11 +21,15 @@ public class GameService {
         repository.save(game);
     }
 
-    public Optional<Game> getById(Long id) {
-        return Optional.of(repository.getById(id));
+    public Optional<Game> findById(Long id) {
+        return repository.findById(id);
     }
 
     public void deleteById(Long id) {
         deleteById(id);
+    }
+
+    public List<Game> findAll(){
+        return repository.findAll();
     }
 }

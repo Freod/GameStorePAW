@@ -25,11 +25,12 @@
         </p>
         <p>
             <label for="email" class="sr-only">Email</label>
-            <input type="text" id="email" name="email" class="form-control" placeholder="Email" required>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
         </p>
         <p>
             <label for="password" class="sr-only">Password</label>
             <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+            <input type="button" onclick="" value="Show Password"/>
         </p>
         <!-- <p>
             <label for="confirmPassword" class="sr-only">Confirm password</label>

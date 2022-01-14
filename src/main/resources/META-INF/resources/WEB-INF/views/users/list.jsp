@@ -41,6 +41,8 @@
                 <td>${user.name}</td>
                 <td>${user.surname}</td>
                 <td>${user.active}</td>
+                <td></td>
+                <td><a href="/users/reset/${user.id}">Password reset</a></td>
                 <td><a href="/users/edit/${user.id}">Edit customer</a></td>
                 <td><a style="color:#dc3545" href="/users/delete/${user.id}">Remove customer</a></td>
             </tr>
