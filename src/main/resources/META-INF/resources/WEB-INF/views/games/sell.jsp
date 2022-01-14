@@ -2,14 +2,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Add game</title>
+    <title>Sell game</title>
 </head>
 <body>
 <div id="header">
     <jsp:include page="../navbar.jsp"/>
 </div>
 <div class="container">
-    <form class="form-signin" id="signupForm" method="post" action="/games/add">
+    <form class="form-signin" id="signupForm" method="post" action="/games/sell">
         <h2 class="form-signup-heading">Add game</h2>
         <p>
             <label for="name">Name</label>
@@ -18,6 +18,9 @@
         <p>
             <label for="platform">Platform</label>
             <input type="text" id="platform" name="platform" class="form-control" placeholder="Platform" required>
+        </p>
+        <p>
+            Zdjecia...
         </p>
         <p>
             <label for="price">Price</label>

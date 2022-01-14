@@ -15,16 +15,18 @@
         <tr>
             <th scope="col">Title</th>
             <th scope="col">Description</th>
+            <th scope="col">Email</th>
             <th scope="col">Package number</th>
         </tr>
         </thead>
         <tbody>
         <c:forEach items="${repairList}" var="repair">
             <tr>
-                <td>${repair.description}</td>
-                <td>${repair.packageNumber}</td>
                 <td>${repair.title}</td>
-<%--                <td><a href="/users/edit/${user.id}">Edit customer</a></td>--%>
+                <td>${repair.description}</td>
+                <td>${repair.user.email}</td>
+                <td>${repair.packageNumber}</td>
+<%--                <td><a href="/repair/answer/${user.id}">Answer</a></td>--%>
 <%--                <td><a style="color:#dc3545" href="/users/delete/${user.id}">Remove customer</a></td>--%>
             </tr>
         </c:forEach>

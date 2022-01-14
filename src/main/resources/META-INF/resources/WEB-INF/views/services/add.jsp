@@ -5,8 +5,11 @@
     <title>Add service</title>
 </head>
 <body>
+<div id="header">
+    <jsp:include page="../navbar.jsp"/>
+</div>
 <div class="container">
-    <form class="form-signin" id="signupForm" method="post" action="/register">
+    <form class="form-signin" id="signupForm" method="post" action="/services/add">
         <h2 class="form-signup-heading">Add game</h2>
         <p>
             <label for="title">Title</label>

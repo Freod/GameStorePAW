@@ -15,6 +15,8 @@ public class Repair {
     private String description;
     @Column(name="repair_packageNumber")
     private String packageNumber;
+    @ManyToOne
+    private User user;
 
     public Long getId() {
         return id;
@@ -46,5 +48,13 @@ public class Repair {
 
     public void setPackageNumber(String packageNumber) {
         this.packageNumber = packageNumber;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

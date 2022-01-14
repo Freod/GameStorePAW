@@ -1,27 +1,28 @@
 package pl.umg.paw.gamestorepaw.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-public class User{
+public class User {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name="user_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
-    @Column(name="user_name")
+    @Column(name = "user_name")
     private String name;
-    @Column(name="user_surname")
+    @Column(name = "user_surname")
     private String surname;
-    @Column(name="user_email")
+    @Column(name = "user_email", unique = true)
     private String email;
-    @Column(name="user_password")
+    @Column(name = "user_password")
     private String password;
     @Column(name = "user_role")
     private String role;
     @Column(name = "user_active")
     private boolean active;
 
-    public User(){
+    public User() {
         super();
     }
 

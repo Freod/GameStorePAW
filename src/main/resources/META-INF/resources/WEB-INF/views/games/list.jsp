@@ -15,10 +15,11 @@
         <li class="ajax_block_product col-md-3 last-item-of-tablet-line col-xs-12 col-sm-6 col-md-4">
             <div class="product">
                 <c:forEach items="${games}" var="game">
+                    <img src="" alt="error"/>
                     <p>${game.name}</p>
                     <p>${game.platform}</p>
                     <p>${game.price}</p>
-                    <p><a href="/games/addToCart/${game.id}">Add to cart</a></p>
+                    <p><a href="/users/addToCart/${game.id}">Add to cart</a></p>
                 </c:forEach>
             </div>
         </li>

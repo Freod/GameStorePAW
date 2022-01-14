@@ -7,6 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import pl.umg.paw.gamestorepaw.model.Game;
 import pl.umg.paw.gamestorepaw.service.GameService;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @Controller
 @RequestMapping("/games")
 public class GameController {
@@ -14,8 +21,14 @@ public class GameController {
     private GameService service;
 
     @GetMapping("/list")
-    public String getAllGames(Model model) {
-        model.addAttribute("games", service.findAll());
+    public String getAllGames(Model model, HttpSession session) {
+        List<Game> list = service.findAll();
+        List<Game> cart = (ArrayList<Game>) session.getAttribute("cart");
+        if(cart!=null){
+            list.removeIf(game1->cart.stream()
+                    .anyMatch(game2->game2.getId().equals(game1.getId())));
+        }
+        model.addAttribute("games", list);
         return "/games/list";
     }
 
@@ -38,7 +51,7 @@ public class GameController {
 
     @PostMapping("/update")
     public void updateGame(Game game) {
-        //TODO:exceptions
+        //TODO:UPDATE
         System.out.println(game);
 //        service.update(game);
     }
@@ -47,13 +60,20 @@ public class GameController {
     public void deleteGame(@PathVariable Long id) {
         if (service.findById(id).isPresent()) {
             System.out.println("delete by " + id);
+            //TODO:DELETE
 //            service.deleteById(id);
         }
     }
 
-    @PostMapping("/addToCart/{id}")
-    public void addGameToCart(@PathVariable Long id){
-        System.out.println(id);
-        System.out.println(service.findById(id));
+    @GetMapping("/sell")
+    public String getSellGameForm(){
+        System.out.println("asdasd");
+        return "/games/sell";
+    }
+
+    @PostMapping("/sell")
+    public void sellGame(Game game){
+        System.out.println(game);
+        //TODO:save
     }
 }

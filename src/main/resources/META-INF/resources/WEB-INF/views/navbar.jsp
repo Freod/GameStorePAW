@@ -37,6 +37,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="/games/add">Add game</a>
                         <a class="dropdown-item" href="/services/list">Services</a>
+                        <a class="dropdown-item" href="/orders/orders">Orders</a>
                     </div>
                 </li>
             </sec:authorize>
@@ -47,7 +48,7 @@
             </sec:authorize>
             <sec:authorize url="/payment/cart">
                 <li class="nav-item">
-                    <a class="nav-link" href="/payment/cart">Cart</a>
+                    <a class="nav-link" href="/users/cart">Cart</a>
                 </li>
             </sec:authorize>
             <sec:authorize url="/users/account">
