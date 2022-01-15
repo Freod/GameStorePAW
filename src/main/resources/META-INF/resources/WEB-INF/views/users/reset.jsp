@@ -3,13 +3,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <jsp:include page="../head.jsp"/>
     <title>Password reset</title>
 </head>
 <body>
 <div id="header">
     <jsp:include page="../navbar.jsp"/>
 </div>
-<div class="container content">
+<div class="container-lg content">
     <form class="form-signin" id="signupForm" method="post" action="/users/reset/${user.get().id}">
         <p>
             <label for="password">Password</label>

@@ -19,6 +19,9 @@ public class User {
     private String password;
     @Column(name = "user_role")
     private String role;
+//    TODO:orders
+//    @Column(name="user_orderid")
+//    private Long orderid;
     @Column(name = "user_active")
     private boolean active;
 

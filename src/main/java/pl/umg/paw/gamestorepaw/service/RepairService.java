@@ -3,6 +3,7 @@ package pl.umg.paw.gamestorepaw.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.umg.paw.gamestorepaw.model.Repair;
+import pl.umg.paw.gamestorepaw.model.User;
 import pl.umg.paw.gamestorepaw.repository.RepairRepository;
 
 import java.util.List;
@@ -32,4 +33,6 @@ public class RepairService {
     public void deleteById(Long id) {
         repository.deleteById(id);
     }
+
+    public List<Repair> findAllByUser(User user){return repository.findAllByUser(user);}
 }

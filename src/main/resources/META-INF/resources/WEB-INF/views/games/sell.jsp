@@ -2,31 +2,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <jsp:include page="../head.jsp"/>
     <title>Sell game</title>
 </head>
 <body>
 <div id="header">
     <jsp:include page="../navbar.jsp"/>
 </div>
-<div class="container">
-    <form class="form-signin" id="signupForm" method="post" action="/games/sell">
-        <h2 class="form-signup-heading">Add game</h2>
-        <p>
+<div class="container-lg content">
+    <form method="post" action="/games/sell">
+        <h1>Sell game</h1>
+        <div class="col-lg-3 col-md-4 p-2">
             <label for="name">Name</label>
             <input type="text" id="name" name="name" class="form-control" placeholder="Name" required>
-        </p>
-        <p>
+        </div>
+        <div class="col-lg-3 col-md-4 p-2">
             <label for="platform">Platform</label>
             <input type="text" id="platform" name="platform" class="form-control" placeholder="Platform" required>
-        </p>
-        <p>
-            Zdjecia...
-        </p>
-        <p>
+        </div>
+        <div class="col-lg-3 col-md-4  p-2">
             <label for="price">Price</label>
             <input type="text" id="price" name="price" class="form-control" placeholder="Price" required>
-        </p>
-        <button class="btn btn-lg btn-primary btn-block" id="btnSubmit" type="submit">Sign up</button>
+        </div>
+        <div>
+            images
+        </div>
+        <div class="p-2">
+            <button class="btn btn-md btn-dark btn-block" id="btnSubmit" type="submit">Sell</button>
+        </div>
     </form>
 </div>
 </body>

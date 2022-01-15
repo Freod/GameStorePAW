@@ -4,22 +4,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <jsp:include page="../head.jsp"/>
     <title>Account</title>
 </head>
 <body>
 <div id="header">
     <jsp:include page="../navbar.jsp"/>
 </div>
-<div class="container content">
-    <a href="/users/cart/deleteAll">Delete All</a>
-    <c:forEach items="${cart}" var="game">
-        ${cart}
-        ${game.name}
-        <a href="/users/cart/delete/${game.id}">Delete</a>
-    </c:forEach>
-    <form action="/users/cart" method="post">
-        <input type="submit" value="Pay">
-    </form>
+<div class="container-lg content">
+    <c:choose>
+        <c:when test="${cart.size()>0}">
+            <div class="col">
+                <h2>Cart:</h2>
+                <div class="col">
+                    <a href="/users/cart/deleteAll" class="text-danger">Clear cart</a>
+                </div>
+                <div class="col">
+                    <div class="table-responsive">
+                        <table class="table table-bordered border-dark table-light">
+                            <thead class="table-dark">
+                            <tr scope="row">
+                                <th scope="col">Name</th>
+                                <th scope="col">Platform</th>
+                                <th scope="col">Price</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${cart}" var="game">
+                                <td>${game.name}</td>
+                                <td>${game.platform}</td>
+                                <td>${game.price}</td>
+                                <td><a href="/users/cart/delete/${game.id}" class="text-danger">Delete</a></td>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <form action="/users/cart" method="post">
+                    <input type="submit" value="Pay">
+                </form>
+            </div>
+        </c:when>
+        <c:otherwise>
+            <div>
+                <h1>Cart is empty</h1>
+            </div>
+        </c:otherwise>
+    </c:choose>
 </div>
 </body>
 </html>

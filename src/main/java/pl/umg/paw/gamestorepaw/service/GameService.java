@@ -32,4 +32,6 @@ public class GameService {
     public List<Game> findAll(){
         return repository.findAll();
     }
+
+    public List<Game> findAllNotSold(){return repository.findAllNotSold();}
 }

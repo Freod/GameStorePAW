@@ -7,11 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import pl.umg.paw.gamestorepaw.model.Game;
 import pl.umg.paw.gamestorepaw.service.GameService;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -22,7 +19,7 @@ public class GameController {
 
     @GetMapping("/list")
     public String getAllGames(Model model, HttpSession session) {
-        List<Game> list = service.findAll();
+        List<Game> list = service.findAllNotSold();
         List<Game> cart = (ArrayList<Game>) session.getAttribute("cart");
         if(cart!=null){
             list.removeIf(game1->cart.stream()

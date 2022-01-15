@@ -3,13 +3,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <jsp:include page="../head.jsp"/>
     <title>Edit user</title>
 </head>
 <body>
 <div id="header">
     <jsp:include page="../navbar.jsp"/>
 </div>
-<div class="container content">
+<div class="container-lg content">
     <c:forEach items="${users}" var="user">
         <form class="form-signin" id="signupForm" method="post" action="/users/edit/${user.get().id}">
                 <%--<form class="form-signin" id="signupForm" method="post" action="/users/edit">--%>
@@ -38,7 +39,7 @@
                        id="EMPLOYEE" ${user.get().role.contains("EMPLOYEE")?'checked':''}/>
                 <label for="EMPLOYEE">EMPLOYEE</label><br/>
                 <input type="checkbox" name="role" value="USER"
-                       id="USER" ${user.get().role.contains("USER")?'checked':''}/>
+                       id="USER" checked disabled/>
                 <label for="USER">USER</label>
             </p>
             <p>

@@ -4,13 +4,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <jsp:include page="../head.jsp"/>
     <title>Account</title>
 </head>
 <body>
 <div id="header">
     <jsp:include page="../navbar.jsp"/>
 </div>
-<div class="container content">
+<div class="container-lg content">
     ${price}
     <form action="/users/payment" method="post">
         <input type="submit" value="Pay">

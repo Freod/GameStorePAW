@@ -7,8 +7,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.umg.paw.gamestorepaw.model.Game;
 import pl.umg.paw.gamestorepaw.model.MyUserDetails;
+import pl.umg.paw.gamestorepaw.model.Order;
 import pl.umg.paw.gamestorepaw.model.User;
 import pl.umg.paw.gamestorepaw.service.GameService;
+import pl.umg.paw.gamestorepaw.service.OrderService;
+import pl.umg.paw.gamestorepaw.service.RepairService;
 import pl.umg.paw.gamestorepaw.service.UserService;
 
 import javax.servlet.http.HttpSession;
@@ -22,9 +25,12 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService service;
-
     @Autowired
     private GameService gameService;
+    @Autowired
+    private OrderService orderService;
+    @Autowired
+    private RepairService repairService;
 
     @GetMapping("/list")
     public String getAllUsers(Model model) {
@@ -41,6 +47,7 @@ public class UserController {
 
     @PostMapping("/edit/{id}")
     public String editUser(@PathVariable Long id, User user) {
+        user.setPassword(service.findById(user.getId()).get().getPassword());
         service.save(user);
         return "redirect:/users/list";
     }
@@ -87,6 +94,8 @@ public class UserController {
     public String getUserAccount(Model model) {
         String email = checkEmailLoggedUser();
         model.addAttribute("user", service.findByEmail(email).get());
+        model.addAttribute("orders", orderService.findAllByUser(service.findByEmail(email).get()));
+        model.addAttribute("repairs", repairService.findAllByUser(service.findByEmail(email).get()));
         return "/users/account";
     }
 
@@ -120,13 +129,14 @@ public class UserController {
         return "redirect:/users/cart";
     }
 
-    @PostMapping("/users/payment")
-    public void endUserCartPayment(Model model, HttpSession session) {
-//        List<Game> cart = (ArrayList<Game>) session.getAttribute("cart");
-//        User user = service.findByEmail(checkEmailLoggedUser()).get();
-//        for (Game game: cart) {
-//            gameTransactionService.save(new GameTransaction(user.getId(), game.getId()));
-//        }
+    @PostMapping("/payment")
+    public String endUserCartPayment(Model model, HttpSession session) {
+        List<Game> cart = (ArrayList<Game>) session.getAttribute("cart");
+        User user = service.findByEmail(checkEmailLoggedUser()).get();
+        Order order = new Order(user, cart);
+        clearUserCart(session);
+        orderService.save(order);
+        return "redirect:/users/account";
     }
 
     @GetMapping("/addToCart/{id}")
