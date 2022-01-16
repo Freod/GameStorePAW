@@ -4,12 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.yaml.snakeyaml.util.EnumUtils;
 import pl.umg.paw.gamestorepaw.model.Game;
+import pl.umg.paw.gamestorepaw.model.Platform;
 import pl.umg.paw.gamestorepaw.service.GameService;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/games")
@@ -20,6 +21,9 @@ public class GameController {
     @GetMapping("/list")
     public String getAllGames(Model model, HttpSession session) {
         List<Game> list = service.findAllNotSold();
+        List<Game> list2 = service.findAll();
+        System.out.println(list);
+        System.out.println(list2);
         List<Game> cart = (ArrayList<Game>) session.getAttribute("cart");
         if(cart!=null){
             list.removeIf(game1->cart.stream()
@@ -30,7 +34,10 @@ public class GameController {
     }
 
     @GetMapping("/add")
-    public String getSaveGameForm() {
+    public String getSaveGameForm(Model model) {
+        List<Platform> platforms = Arrays.asList(Platform.values());
+        System.out.println(platforms);
+        model.addAttribute("platforms", platforms);
         return "/games/add";
     }
 
@@ -64,7 +71,6 @@ public class GameController {
 
     @GetMapping("/sell")
     public String getSellGameForm(){
-        System.out.println("asdasd");
         return "/games/sell";
     }
 

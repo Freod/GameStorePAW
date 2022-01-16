@@ -10,9 +10,9 @@
         <jsp:include page="navbar.jsp"/>
     </div>
     <div class="container content">
-        Main site
-        admin admin
-
+        <p>login: admin password: admin</p>
+        <p>login: employee password: employee</p>
+        <p>login: user password: user</p>
     </div>
 </body>
 </html>

@@ -41,7 +41,7 @@
                     <a class="nav-link" href="/users/list">Manage users</a>
                 </li>
             </sec:authorize>
-            <sec:authorize url="/payment/cart">
+            <sec:authorize url="/users/cart">
                 <li class="nav-item">
                     <a class="nav-link" href="/users/cart">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart"
@@ -65,6 +65,11 @@
             <sec:authorize access="!isAuthenticated()">
                 <li class="nav-item">
                     <a class="nav-link" href="/login">Sign in</a>
+                </li>
+            </sec:authorize>
+            <sec:authorize access="!isAuthenticated()">
+                <li class="nav-item">
+                    <a class="nav-link" href="/register">Sign up</a>
                 </li>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">

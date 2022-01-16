@@ -25,7 +25,7 @@
             <input type="text" id="packageNumber" name="packageNumber" class="form-control" placeholder="Package number" required>
         </div>
         <div class="p-2">
-            <button class="btn btn-md btn-dark btn-block" id="btnSubmit" type="submit">Sell</button>
+            <button class="btn btn-md btn-dark btn-block" id="btnSubmit" type="submit">Send</button>
         </div>
     </form>
 </div>

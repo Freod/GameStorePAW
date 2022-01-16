@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface GameRepository extends JpaRepository<Game, Long> {
-    @Query("select game from Game game where game.id not in (select order from Order order)")
+    @Query(value = "select * from gamestorepaw.game where gamestorepaw.game.game_id not in(select games_game_id from gamestorepaw.orders inner join gamestorepaw.orders_games on order_id = order_order_id);", nativeQuery = true)
     List<Game> findAllNotSold();
 }

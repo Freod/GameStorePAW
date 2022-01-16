@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,8 +18,12 @@
             <input type="text" id="name" name="name" class="form-control" placeholder="Name" required>
         </div>
         <div class="col-lg-3 col-md-4 p-2">
-            <label for="platform">Platform</label>
-            <input type="text" id="platform" name="platform" class="form-control" placeholder="Platform" required>
+            <label for="platforms">Platform</label>
+            <select name="platform" id="platforms">
+                <c:forEach items="${platforms}" var="platform">
+                <option value="${platform}">${platform.toString()}</option>
+                </c:forEach>
+            </select>
         </div>
         <div class="col-lg-3 col-md-4  p-2">
             <label for="price">Price</label>

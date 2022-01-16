@@ -32,10 +32,13 @@
                             </thead>
                             <tbody>
                             <c:forEach items="${cart}" var="game">
-                                <td>${game.name}</td>
-                                <td>${game.platform}</td>
-                                <td>${game.price}</td>
-                                <td><a href="/users/cart/delete/${game.id}" class="text-danger">Delete</a></td>
+                                <tr scope="row">
+                                    <td scope="col">${game.name}</td>
+                                    <td scope="col">${game.platform}</td>
+                                    <td scope="col">${game.price}</td>
+                                    <td scope="col"><a href="/users/cart/delete/${game.id}"
+                                                       class="text-danger">Delete</a></td>
+                                </tr>
                             </c:forEach>
                             </tbody>
                         </table>

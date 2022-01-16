@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.math.BigInteger;
@@ -60,10 +59,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.authorizeRequests()
-                .antMatchers("/users/**").hasAuthority("ADMIN")
-                .antMatchers("/games/add", "/games/delete", "/games/update", "/services/list", "/services/delete").hasAnyAuthority("EMPLOYEE", "ADMIN")
-                .antMatchers("/services/add", "/games/buy", "/games/sell").hasAnyAuthority("USER", "EMPLOYEE", "ADMIN")
+                .antMatchers("/games/sell").denyAll()
                 .antMatchers("/","/games/list","/register", "/login").permitAll()
+                .antMatchers("/services/add", "/games/buy", "/users/cart", "/users/account", "/users/addToCart/**", "/users/payment").hasAnyAuthority("USER", "EMPLOYEE", "ADMIN")
+                .antMatchers("/games/add", "/games/delete", "/games/update", "/services/list", "/services/delete", "/orders/orders").hasAnyAuthority("EMPLOYEE", "ADMIN")
+                .antMatchers("/users/**", "/**").hasAuthority("ADMIN")
                 .and().formLogin()
                 .and().csrf().disable();
     }

@@ -48,7 +48,12 @@ public class UserController {
     @PostMapping("/edit/{id}")
     public String editUser(@PathVariable Long id, User user) {
         user.setPassword(service.findById(user.getId()).get().getPassword());
-        service.save(user);
+        if (user.getRole() == null)
+            user.setRole("USER");
+        else
+            user.setRole(user.getRole() + ",USER");
+        System.out.println(user);
+        service.update(user);
         return "redirect:/users/list";
     }
 
