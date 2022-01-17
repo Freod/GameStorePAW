@@ -35,4 +35,6 @@ public class RepairService {
     }
 
     public List<Repair> findAllByUser(User user){return repository.findAllByUser(user);}
+
+    public List<Repair> findAllNotSended(){return repository.findAllNotSended();}
 }

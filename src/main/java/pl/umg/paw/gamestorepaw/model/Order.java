@@ -10,6 +10,10 @@ public class Order {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="order_id")
     private Long id;
+    @Column(name="order_status")
+    private String status;
+    @Column(name="order_packageNumber")
+    private Long packageNumber;
     @OneToOne
     private User user;
     @OneToMany
@@ -47,10 +51,28 @@ public class Order {
         this.games = games;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Long getPackageNumber() {
+        return packageNumber;
+    }
+
+    public void setPackageNumber(Long packageNumber) {
+        this.packageNumber = packageNumber;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
                 "id=" + id +
+                ", status='" + status + '\'' +
+                ", packageNumber=" + packageNumber +
                 ", user=" + user +
                 ", games=" + games +
                 '}';

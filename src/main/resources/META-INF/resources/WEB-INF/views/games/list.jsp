@@ -15,7 +15,7 @@
     <div class="row">
         <c:forEach items="${games}" var="game">
             <div class="col-md-6">
-                <div class="row border border-dark mx-2">
+                <div class="row border border-dark m-2">
                     <div class="col-sm-6">
                         <img src="" alt="error"/>
                     </div>

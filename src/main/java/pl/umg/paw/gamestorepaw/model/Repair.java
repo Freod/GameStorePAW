@@ -14,7 +14,11 @@ public class Repair {
     @Column(name="repair_description")
     private String description;
     @Column(name="repair_packageNumber")
-    private String packageNumber;
+    private Long packageNumber;
+    @Column(name="repair_status")
+    private String status;
+    @Column(name="repair_price")
+    private Integer price;
     @ManyToOne
     private User user;
 
@@ -42,11 +46,11 @@ public class Repair {
         this.description = description;
     }
 
-    public String getPackageNumber() {
+    public Long getPackageNumber() {
         return packageNumber;
     }
 
-    public void setPackageNumber(String packageNumber) {
+    public void setPackageNumber(Long packageNumber) {
         this.packageNumber = packageNumber;
     }
 
@@ -56,5 +60,21 @@ public class Repair {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 }

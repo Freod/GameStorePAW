@@ -39,9 +39,11 @@
                     <tr scope="row">
                         <th scope="col">#</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Package</th>
                         <th scope="col">Name</th>
                         <th scope="col">Platform</th>
                         <th scope="col">Price</th>
+                        <th scope="col">Total</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -55,12 +57,26 @@
                                 </c:choose>
                                 <c:choose>
                                     <c:when test="${status.first}">
-                                        <td rowspan="${order.games.size()}">Status</td>
+                                        <td rowspan="${order.games.size()}">${order.status}</td>
+                                    </c:when>
+                                </c:choose>
+                                <c:choose>
+                                    <c:when test="${status.first}">
+                                        <td rowspan="${order.games.size()}">${order.packageNumber}</td>
                                     </c:when>
                                 </c:choose>
                                 <td>${game.name}</td>
                                 <td>${game.platform}</td>
                                 <td>${game.price}</td>
+                                <c:choose>
+                                    <c:when test="${status.first}">
+                                        <c:set var="total" value="${0}"/>
+                                        <c:forEach items="${order.games}" var="gamePrice" varStatus="status">
+                                            <c:set var="total" value="${total + gamePrice.price}"/>
+                                        </c:forEach>
+                                        <td rowspan="${order.games.size()}">${total}</td>
+                                    </c:when>
+                                </c:choose>
                             </tr>
                         </c:forEach>
                     </c:forEach>
@@ -77,16 +93,22 @@
                         <th scope="col">Title</th>
                         <th scope="col">Desciption</th>
                         <th scope="col">Package</th>
+                        <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${repairs}" var="repair">
                         <tr scope="row">
                             <td>${repair.id}</td>
-                            <td>Status</td>
+                            <td>${repair.status}</td>
                             <td>${repair.title}</td>
                             <td>${repair.description}</td>
                             <td>${repair.packageNumber}</td>
+                            <c:choose>
+                                <c:when test="${repair.status=='Waiting for payment'}">
+                                    <td><a href="/services/pay/${repair.id}">Pay</a></td>
+                                </c:when>
+                            </c:choose>
                         </tr>
                     </c:forEach>
                     </tbody>

@@ -27,7 +27,7 @@
         </div>
         <div class="col-lg-3 col-md-4  p-2">
             <label for="price">Price</label>
-            <input type="text" id="price" name="price" class="form-control" placeholder="Price" required>
+            <input type="number" id="price" name="price" class="form-control" placeholder="Price" required>
         </div>
         <div class="p-2">
             <button class="btn btn-md btn-dark btn-block" id="btnSubmit" type="submit">Add</button>

@@ -12,8 +12,8 @@
     <jsp:include page="../navbar.jsp"/>
 </div>
 <div class="container-lg content">
-    <form action="/users/payment" method="post">
-        <h1>${price}</h1>
+    <form action="/services/endPay/${repair.id}" method="get">
+        <h1>${repair.price}</h1>
         <div class="p-2">
             <button class="btn btn-md btn-dark btn-block" id="btnSubmit" type="submit">Pay</button>
         </div>

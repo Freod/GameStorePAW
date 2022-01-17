@@ -1,5 +1,6 @@
 package pl.umg.paw.gamestorepaw.controller;
 
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -99,7 +100,8 @@ public class UserController {
     public String getUserAccount(Model model) {
         String email = checkEmailLoggedUser();
         model.addAttribute("user", service.findByEmail(email).get());
-        model.addAttribute("orders", orderService.findAllByUser(service.findByEmail(email).get()));
+        List<Order> order = orderService.findAllByUser(service.findByEmail(email).get());
+        model.addAttribute("orders", order);
         model.addAttribute("repairs", repairService.findAllByUser(service.findByEmail(email).get()));
         return "/users/account";
     }
@@ -139,6 +141,7 @@ public class UserController {
         List<Game> cart = (ArrayList<Game>) session.getAttribute("cart");
         User user = service.findByEmail(checkEmailLoggedUser()).get();
         Order order = new Order(user, cart);
+        order.setStatus("Waiting");
         clearUserCart(session);
         orderService.save(order);
         return "redirect:/users/account";

@@ -21,7 +21,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Platform</th>
                 <th scope="col">Price</th>
-                <th scope="col"></th>
+                <th scope="col" colspan="2"></th>
             </tr>
             </thead>
             <tbody>
@@ -40,13 +40,22 @@
                         </c:choose>
                         <c:choose>
                             <c:when test="${status.first}">
-                                <td rowspan="${order.games.size()}">Status</td>
+                                <td rowspan="${order.games.size()}">${order.status}</td>
                             </c:when>
                         </c:choose>
                         <td>${game.name}</td>
                         <td>${game.platform}</td>
                         <td>${game.price}</td>
-                        <td>Wyślij</td>
+                        <c:choose>
+                            <c:when test="${status.first}">
+                                <td rowspan="${order.games.size()}"><p><a href="/orders/send/${order.id}">Send</a></p></td>
+                            </c:when>
+                        </c:choose>
+                        <c:choose>
+                            <c:when test="${status.first}">
+                                <td rowspan="${order.games.size()}"><p><a class="text-danger" href="/orders/delete/${order.id}">Delete</a></p></td>
+                            </c:when>
+                        </c:choose>
                     </tr>
                 </c:forEach>
             </c:forEach>
