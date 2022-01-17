@@ -24,8 +24,7 @@ public class RepairController {
 
     @GetMapping("/list")
     public String getAllRepairs(Model model) {
-//        model.addAttribute("repairList",service.findAllNotSended());
-        model.addAttribute("repairList",service.findAll());
+        model.addAttribute("repairList",service.findAllNotSended());
         return "/services/list";
     }
 
