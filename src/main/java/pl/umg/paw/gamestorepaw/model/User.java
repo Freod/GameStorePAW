@@ -1,6 +1,8 @@
 package pl.umg.paw.gamestorepaw.model;
 
 import javax.persistence.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @Entity
@@ -19,14 +21,41 @@ public class User {
     private String password;
     @Column(name = "user_role")
     private String role;
-//    TODO:orders
-//    @Column(name="user_orderid")
-//    private Long orderid;
     @Column(name = "user_active")
     private boolean active;
 
     public User() {
         super();
+    }
+
+    public User(String name, String surname, String email, String password, String role, boolean active) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.active = active;
+    }
+
+    public User(Long id, String name, String surname, String email, String password, String role, boolean active) throws NoSuchAlgorithmException {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.password = hash(password);
+        this.role = role;
+        this.active = active;
+    }
+
+    private String hash(String password) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(password.getBytes());
+        byte[] bytes = md.digest();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < bytes.length; i++) {
+            sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+        }
+        return sb.toString();
     }
 
     public Long getId() {
@@ -65,7 +94,11 @@ public class User {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password) throws NoSuchAlgorithmException {
+        this.password = hash(password);
+    }
+
+    public void setHashedPassword(String password){
         this.password = password;
     }
 

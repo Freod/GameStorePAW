@@ -16,8 +16,8 @@ public class Game {
     private String platform;
     @Column(name="game_price")
     private double price;
-    @OneToMany
-    private List<Image> images;
+    @Column(name = "game_image")
+    private String image;
 
     public Long getId() {
         return id;
@@ -51,6 +51,14 @@ public class Game {
         this.price = price;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
         return "Game{" +
@@ -58,7 +66,7 @@ public class Game {
                 ", name='" + name + '\'' +
                 ", platform='" + platform + '\'' +
                 ", price=" + price +
-                ", images=" + images +
+                ", image='" + image + '\'' +
                 '}';
     }
 }

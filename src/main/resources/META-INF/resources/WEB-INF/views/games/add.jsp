@@ -21,13 +21,17 @@
             <label for="platforms">Platform</label>
             <select name="platform" id="platforms">
                 <c:forEach items="${platforms}" var="platform">
-                <option value="${platform}">${platform.toString()}</option>
+                <option value="${platform.toString()}">${platform.toString()}</option>
                 </c:forEach>
             </select>
         </div>
         <div class="col-lg-3 col-md-4  p-2">
             <label for="price">Price</label>
             <input type="number" id="price" name="price" class="form-control" placeholder="Price" required>
+        </div>
+        <div class="col-lg-3 col-md-4  p-2">
+            <label for="image">Photos: </label>
+            <input type="file" id="image" name="image" accept="image/png, image/jpeg" />
         </div>
         <div class="p-2">
             <button class="btn btn-md btn-dark btn-block" id="btnSubmit" type="submit">Add</button>

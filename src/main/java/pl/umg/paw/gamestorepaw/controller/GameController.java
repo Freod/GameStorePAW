@@ -3,7 +3,9 @@ package pl.umg.paw.gamestorepaw.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.yaml.snakeyaml.util.EnumUtils;
 import pl.umg.paw.gamestorepaw.model.Game;
 import pl.umg.paw.gamestorepaw.model.Platform;
@@ -36,14 +38,17 @@ public class GameController {
     @GetMapping("/add")
     public String getSaveGameForm(Model model) {
         List<Platform> platforms = Arrays.asList(Platform.values());
-        System.out.println(platforms);
         model.addAttribute("platforms", platforms);
         return "/games/add";
     }
 
     @PostMapping("/add")
-    public String saveGame(Game game) {
+    public String saveGame(Game game, @RequestParam("image") MultipartFile multipartFile) {
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        game.setImage(fileName);
         service.save(game);
+        String uploadDir = "gamesImages/" + game.getId();
+        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         return "redirect:/games/list";
     }
 

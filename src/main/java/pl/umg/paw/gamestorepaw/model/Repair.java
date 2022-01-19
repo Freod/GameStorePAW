@@ -1,5 +1,8 @@
 package pl.umg.paw.gamestorepaw.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 
 @Entity

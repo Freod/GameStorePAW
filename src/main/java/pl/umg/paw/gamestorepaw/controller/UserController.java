@@ -1,6 +1,5 @@
 package pl.umg.paw.gamestorepaw.controller;
 
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -15,8 +14,8 @@ import pl.umg.paw.gamestorepaw.service.OrderService;
 import pl.umg.paw.gamestorepaw.service.RepairService;
 import pl.umg.paw.gamestorepaw.service.UserService;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
     @Autowired
-    private UserService service;
+    private UserService userService;
     @Autowired
     private GameService gameService;
     @Autowired
@@ -33,76 +32,74 @@ public class UserController {
     @Autowired
     private RepairService repairService;
 
+    @PostConstruct
+    public void createStartupModels() throws NoSuchAlgorithmException {
+        User admin = new User(1L, "Admin", "Admin", "admin", "admin", "ADMIN,EMPLOYEE,USER", true);
+        User employee = new User(2L, "Employee", "Employee", "employee", "employee", "EMPLOYEE,USER", true);
+        User user = new User(3L, "User", "User", "user", "user", "USER", true);
+        userService.save(admin);
+        userService.save(employee);
+        userService.save(user);
+    }
+
     @GetMapping("/list")
     public String getAllUsers(Model model) {
-        model.addAttribute("users", service.findAll());
+        model.addAttribute("users", userService.findAll());
         return "/users/list";
     }
 
     @GetMapping("/edit/{id}")
     public String getUser(@PathVariable Long id, Model model) {
-        System.out.println(service.findById(id));
-        model.addAttribute("user", service.findById(id));
+        System.out.println(userService.findById(id));
+        model.addAttribute("user", userService.findById(id));
         return "/users/edit";
     }
 
     @PostMapping("/edit/{id}")
     public String editUser(@PathVariable Long id, User user) {
-        user.setPassword(service.findById(user.getId()).get().getPassword());
+        user.setHashedPassword(userService.findById(user.getId()).get().getPassword());
         if (user.getRole() == null)
             user.setRole("USER");
         else
             user.setRole(user.getRole() + ",USER");
         System.out.println(user);
-        service.update(user);
+        userService.update(user);
         return "redirect:/users/list";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable Long id) {
-        if (service.findById(id).isPresent()) {
-            service.deleteById(id);
+        if (userService.findById(id).isPresent()) {
+            userService.deleteById(id);
         }
         return "redirect:/users/list";
     }
 
     @GetMapping("/reset/{id}")
     public String getResetPasswordForm(@PathVariable Long id, Model model) {
-        model.addAttribute("user", service.findById(id));
+        model.addAttribute("user", userService.findById(id));
         return "/users/reset";
     }
 
     @PostMapping("/reset/{id}")
-    public void resetPassword(@PathVariable Long id, String password) {
-        User user = service.findById(id).get();
-        user.setPassword(password);
+    public void resetPassword(@PathVariable Long id, String password){
+        User user = userService.findById(id).get();
         try {
-            user.setPassword(hash(user.getPassword()));
+            user.setPassword(password);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } finally {
-            service.save(user);
+            userService.save(user);
         }
-    }
-
-    public String hash(String password) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(password.getBytes());
-        byte[] bytes = md.digest();
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < bytes.length; i++) {
-            sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-        }
-        return sb.toString();
     }
 
     @GetMapping("/account")
     public String getUserAccount(Model model) {
         String email = checkEmailLoggedUser();
-        model.addAttribute("user", service.findByEmail(email).get());
-        List<Order> order = orderService.findAllByUser(service.findByEmail(email).get());
+        model.addAttribute("user", userService.findByEmail(email).get());
+        List<Order> order = orderService.findAllByUser(userService.findByEmail(email).get());
         model.addAttribute("orders", order);
-        model.addAttribute("repairs", repairService.findAllByUser(service.findByEmail(email).get()));
+        model.addAttribute("repairs", repairService.findAllByUser(userService.findByEmail(email).get()));
         return "/users/account";
     }
 
@@ -139,7 +136,7 @@ public class UserController {
     @PostMapping("/payment")
     public String endUserCartPayment(Model model, HttpSession session) {
         List<Game> cart = (ArrayList<Game>) session.getAttribute("cart");
-        User user = service.findByEmail(checkEmailLoggedUser()).get();
+        User user = userService.findByEmail(checkEmailLoggedUser()).get();
         Order order = new Order(user, cart);
         order.setStatus("Waiting");
         clearUserCart(session);
