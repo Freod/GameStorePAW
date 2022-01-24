@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
         http.authorizeRequests()
                 .antMatchers("/games/sell", "/users/delete/**").denyAll()
-                .antMatchers("/","/games/list","/register", "/login").permitAll()
+                .antMatchers("/","/games/list","/register", "/login", "/images/**").permitAll()
                 .antMatchers("/services/add", "/games/buy", "/users/cart", "/users/account", "/users/addToCart/**", "/users/payment", "/services/pay/**", "/services/endPay/**", "/users/cart/delete/**", "/users/cart/deleteAll").hasAnyAuthority("USER", "EMPLOYEE", "ADMIN")
                 .antMatchers("/games/add", "/games/delete", "/games/update", "/services/list", "/services/delete", "/orders/orders", "/orders/send/**", "/orders/delete/**", "/services/answer/**", "/services/send/**", "/services/endSend/**").hasAnyAuthority("EMPLOYEE", "ADMIN")
                 .antMatchers("/users/**", "/**").hasAuthority("ADMIN")

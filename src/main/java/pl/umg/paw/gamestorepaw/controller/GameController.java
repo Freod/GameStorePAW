@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.umg.paw.gamestorepaw.model.Game;
 import pl.umg.paw.gamestorepaw.model.Platform;
-import pl.umg.paw.gamestorepaw.model.User;
 import pl.umg.paw.gamestorepaw.service.GameService;
 
 import javax.annotation.PostConstruct;
@@ -17,7 +16,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 @Controller

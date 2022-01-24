@@ -14,7 +14,7 @@
     <form method="get" action="/services/answer/update/${repair.id}">
         <div class="col-lg-3 col-md-4 p-2">
             <label for="price">Price</label>
-            <input type="number" id="price" name="price" class="form-control" placeholder="Price" required autofocus>
+            <input type="number" id="price" name="price" class="form-control" placeholder="Price" maxlength="4" min="0" max="999999" required autofocus>
         </div>
         <div class="p-2">
             <button class="btn btn-md btn-dark btn-block" id="btnSubmit" type="submit">Update</button>

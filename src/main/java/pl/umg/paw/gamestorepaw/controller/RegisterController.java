@@ -31,9 +31,14 @@ public class RegisterController {
         if(user.getId()!=null){
             user.setId(null);
         }
+        if(service.findByEmail(user.getEmail()).isPresent()){
+            model.addAttribute("user", user);
+            user.setEmail("");
+            return "/register";
+        }
         user.setActive(true);
         user.setRole("USER");
         service.save(user);
-        return "/";
+        return "index";
     }
 }

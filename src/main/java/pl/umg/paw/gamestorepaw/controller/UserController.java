@@ -59,7 +59,7 @@ public class UserController {
         if(user.getId()==null){
             return "/users/list";
         }
-        if(user.getName().isEmpty() || user.getSurname().isEmpty() || user.getEmail().isEmpty() || user.getRole().isEmpty()) {
+        if(user.getName().isEmpty() || user.getSurname().isEmpty() || user.getEmail().isEmpty()) {
             return "/user/edit/"+user.getId();
         }
         user.setHashedPassword(userService.findById(user.getId()).get().getPassword());

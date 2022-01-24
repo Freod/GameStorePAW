@@ -14,7 +14,7 @@
     <form method="get" action="/services/endSend/${repair.id}">
         <div class="col-lg-3 col-md-4 p-2">
             <label for="packageNumber">Package number</label>
-            <input type="number" id="packageNumber" name="packageNumber" class="form-control" placeholder="Package number" required autofocus>
+            <input type="number" id="packageNumber" name="packageNumber" class="form-control" placeholder="Package number" maxlength="30" min="0" required autofocus>
         </div>
         <div class="p-2">
             <button class="btn btn-md btn-dark btn-block" id="btnSubmit" type="submit">Send</button>
