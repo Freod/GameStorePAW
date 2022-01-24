@@ -8,14 +8,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.umg.paw.gamestorepaw.model.Game;
 import pl.umg.paw.gamestorepaw.model.Platform;
+import pl.umg.paw.gamestorepaw.model.User;
 import pl.umg.paw.gamestorepaw.service.GameService;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 @Controller
@@ -23,6 +25,13 @@ import java.util.*;
 public class GameController {
     @Autowired
     private GameService service;
+
+    @PostConstruct
+    public void createStartupModels(){
+        service.save(new Game(1L, "Spider-man Miles Morales", Platform.PLAYSTATION5.toString(), 30, "Marvels-Spider-Man-Miles-Morales-Gra-PS5-1.jpg"));
+        service.save(new Game(2L, "Returnal", Platform.PLAYSTATION5.toString(), 20, "i-returnal-gra-ps5.jpg"));
+        service.save(new Game(3L, "Halo Infinite", Platform.XBOXSERIESX.toString(), 90, "microsoft-gra-xbox-one-halo-infinite,68782888225_8.jpg"));
+    }
 
     @GetMapping("/list")
     public String getAllGames(Model model, HttpSession session) {
@@ -47,7 +56,16 @@ public class GameController {
     }
 
     @PostMapping("/add")
-    public String saveGame(@RequestParam MultipartFile file, Game game){
+    public String saveGame(@RequestParam MultipartFile file, Game game, Model model){
+        if(game. getName().isEmpty() || game.getPlatform().isEmpty() || game.getPrice()<1) {
+            List<Platform> platforms = Arrays.asList(Platform.values());
+            model.addAttribute("platforms", platforms);
+            model.addAttribute("game", game);
+            return "/games/add";
+        }
+        if(game.getId()!=null){
+            game.setId(null);
+        }
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         game.setImage(fileName);
         game = service.saveAndFlush(game);
@@ -66,36 +84,36 @@ public class GameController {
         return "redirect:/games/list";
     }
 
-    @GetMapping("/update/{id}")
-    public String getUpdateGameForm(@PathVariable Long id) {
-        service.findById(id);
-        return "/games/add";
-    }
+//    @GetMapping("/update/{id}")
+//    public String getUpdateGameForm(@PathVariable Long id) {
+//        service.findById(id);
+//        return "/games/add";
+//    }
 
-    @PostMapping("/update")
-    public void updateGame(Game game) {
-        //TODO:UPDATE
-        System.out.println(game);
-//        service.update(game);
-    }
+//    @PostMapping("/update")
+//    public void updateGame(Game game) {
+//        //TODO:UPDATE
+//        System.out.println(game);
+////        service.update(game);
+//    }
 
-    @GetMapping("/delete/{id}")
-    public void deleteGame(@PathVariable Long id) {
-        if (service.findById(id).isPresent()) {
-            System.out.println("delete by " + id);
-            //TODO:DELETE
-//            service.deleteById(id);
-        }
-    }
+//    @GetMapping("/delete/{id}")
+//    public void deleteGame(@PathVariable Long id) {
+//        if (service.findById(id).isPresent()) {
+//            System.out.println("delete by " + id);
+//            //TODO:DELETE
+////            service.deleteById(id);
+//        }
+//    }
 
-    //TODO:SELL
-    @GetMapping("/sell")
-    public String getSellGameForm(){
-        return "/games/sell";
-    }
+//    //TODO:SELL
+//    @GetMapping("/sell")
+//    public String getSellGameForm(){
+//        return "/games/sell";
+//    }
 
-    @PostMapping("/sell")
-    public void sellGame(Game game){
-        System.out.println(game);
-    }
+//    @PostMapping("/sell")
+//    public void sellGame(Game game){
+//        System.out.println(game);
+//    }
 }

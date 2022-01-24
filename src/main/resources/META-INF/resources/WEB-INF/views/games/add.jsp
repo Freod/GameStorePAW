@@ -15,7 +15,7 @@
         <h1>Add game</h1>
         <div class="col-lg-3 col-md-4 p-2">
             <label for="name">Name</label>
-            <input type="text" id="name" name="name" class="form-control" placeholder="Name" required>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Name" value="${game.name}" required>
         </div>
         <div class="col-lg-3 col-md-4 p-2">
             <label for="platforms">Platform</label>
@@ -27,7 +27,7 @@
         </div>
         <div class="col-lg-3 col-md-4  p-2">
             <label for="price">Price</label>
-            <input type="number" id="price" name="price" class="form-control" placeholder="Price" required>
+            <input type="number" id="price" name="price" class="form-control" placeholder="Price" value="${game.price}"  required>
         </div>
         <div class="col-lg-3 col-md-4  p-2">
             <label for="file">Photos: </label>

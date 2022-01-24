@@ -14,15 +14,16 @@
         <h1>Add service</h1>
         <div class="col-lg-3 col-md-4 p-2">
             <label for="title">Title</label>
-            <input type="text" id="title" name="title" class="form-control" placeholder="Title" required>
+            <input type="text" id="title" name="title" class="form-control" placeholder="Title" value="${repair.title}"required>
         </div>
         <div class="col-lg-3 col-md-4 p-2">
             <label for="description">Description</label>
-            <input type="text" id="description" name="description" class="form-control" placeholder="Description" required>
+            <textarea id="description" name="description" class="form-control" placeholder="Description" required>${repair.description}</textarea>
+<%--            <input type="text" id="description" name="description" class="form-control" placeholder="Description" required>--%>
         </div>
         <div class="col-lg-3 col-md-4  p-2">
             <label for="packageNumber">Package number</label>
-            <input type="number" id="packageNumber" name="packageNumber" class="form-control" placeholder="Package number" required>
+            <input type="number" id="packageNumber" name="packageNumber" class="form-control" placeholder="Package number" value="${repair.packageNumber}" required>
         </div>
         <div class="p-2">
             <button class="btn btn-md btn-dark btn-block" id="btnSubmit" type="submit">Send</button>

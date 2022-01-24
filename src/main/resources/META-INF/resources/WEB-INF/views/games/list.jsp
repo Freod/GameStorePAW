@@ -15,11 +15,11 @@
     <div class="row">
         <c:forEach items="${games}" var="game">
             <div class="col-md-6">
-                <div class="row border border-dark m-2 mx-">
-                    <div class="col-sm-6">
-                        <img class="img-fluid img-thumbnail" src="/images/${game.id}/${game.image}" alt="fileNotFound"/>
+                <div class="row border border-dark m-2">
+                    <div class="col-sm-6 p-2 text-center" style="min-height: 200px; max-height: 200px">
+                        <img class="img-thumbnail" style="min-height: 180px; max-height: 180px" src="/images/${game.id}/${game.image}" alt="fileNotFound"/>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 p-2 text-center">
                         <p>${game.name}</p>
                         <p>${game.platform}</p>
                         <p>${game.price}</p>

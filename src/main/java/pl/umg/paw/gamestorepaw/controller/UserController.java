@@ -50,13 +50,18 @@ public class UserController {
 
     @GetMapping("/edit/{id}")
     public String getUser(@PathVariable Long id, Model model) {
-        System.out.println(userService.findById(id));
         model.addAttribute("user", userService.findById(id));
         return "/users/edit";
     }
 
     @PostMapping("/edit/{id}")
     public String editUser(@PathVariable Long id, User user) {
+        if(user.getId()==null){
+            return "/users/list";
+        }
+        if(user.getName().isEmpty() || user.getSurname().isEmpty() || user.getEmail().isEmpty() || user.getRole().isEmpty()) {
+            return "/user/edit/"+user.getId();
+        }
         user.setHashedPassword(userService.findById(user.getId()).get().getPassword());
         if (user.getRole() == null)
             user.setRole("USER");
@@ -82,14 +87,18 @@ public class UserController {
     }
 
     @PostMapping("/reset/{id}")
-    public void resetPassword(@PathVariable Long id, String password){
+    public String resetPassword(@PathVariable Long id, String password){
         User user = userService.findById(id).get();
+        if(password.isEmpty()){
+            return "/users/reset/"+id;
+        }
         try {
             user.setPassword(password);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } finally {
             userService.save(user);
+            return "/users/list";
         }
     }
 

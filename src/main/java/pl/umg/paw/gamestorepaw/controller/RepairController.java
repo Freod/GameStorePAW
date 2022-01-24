@@ -34,7 +34,20 @@ public class RepairController {
     }
 
     @PostMapping("/add")
-    public String saveRepair(Repair repair){
+    public String saveRepair(Repair repair, Model model){
+        if(repair.getTitle().isEmpty() || repair.getDescription().isEmpty() || repair.getPackageNumber().describeConstable().isEmpty()) {
+            model.addAttribute("repair", repair);
+            return "/services/add";
+        }
+        if(repair.getPrice()!=null){
+            repair.setPrice(null);
+        }
+        if(repair.getPackageNumber()<0){
+            repair.setPackageNumber(repair.getPackageNumber()*(-1));
+        }
+        if(repair.getId()!=null){
+            repair.setId(null);
+        }
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String email;
         if (principal instanceof MyUserDetails) {
@@ -45,12 +58,14 @@ public class RepairController {
         repair.setUser(userService.findByEmail(email).get());
         repair.setStatus("Waiting");
         service.save(repair);
-        return "/users/account";
+        return "redirect:/users/account";
     }
 
     @GetMapping("/delete/{id}")
     public void deleteRepair(@PathVariable Long id) {
         if (service.getById(id).isPresent()) {
+            if(!service.getById(id).get().getStatus().equals("Waiting"))
+                return;
             service.deleteById(id);
         }
     }
@@ -63,6 +78,8 @@ public class RepairController {
 
     @GetMapping("/answer/update/{id}")
     public String getRepairAnswerForm(@PathVariable Long id, Integer price) {
+        if(!service.getById(id).get().getStatus().equals("Waiting"))
+            return "redirect:/services/list";
         Repair repair = service.getById(id).get();
         repair.setPrice(price);
         repair.setStatus("Waiting for payment");
@@ -78,6 +95,8 @@ public class RepairController {
 
     @GetMapping("/endPay/{id}")
     public String repairEndPay(@PathVariable Long id) {
+        if(!service.getById(id).get().getStatus().equals("Waiting for payment"))
+            return "/users/account";
         Repair repair = service.getById(id).get();
         repair.setStatus("Payed");
         service.update(repair);
@@ -92,6 +111,8 @@ public class RepairController {
 
     @GetMapping("/endSend/{id}")
     public String repairEndSend(@PathVariable Long id, Long packageNumber){
+        if(!service.getById(id).get().getStatus().equals("Payed"))
+            return "redirect:/services/list";
         Repair repair = service.getById(id).get();
         repair.setPackageNumber(packageNumber);
         repair.setStatus("Sended");

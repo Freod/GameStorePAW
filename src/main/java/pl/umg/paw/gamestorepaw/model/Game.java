@@ -1,7 +1,6 @@
 package pl.umg.paw.gamestorepaw.model;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name="game")
@@ -58,6 +57,16 @@ public class Game {
     public void setImage(String image) {
         this.image = image;
     }
+
+    public Game(Long id, String name, String platform, double price, String image) {
+        this.id = id;
+        this.name = name;
+        this.platform = platform;
+        this.price = price;
+        this.image = image;
+    }
+
+    public Game(){}
 
     @Override
     public String toString() {

@@ -24,6 +24,9 @@ public class OrderController {
 
     @GetMapping("/send/{id}")
     public String sendTheOrder(@PathVariable Long id, Model model){
+        if(orderService.findById(id).get().getStatus().equals("Sended")){
+            return "/orders/orders";
+        }
         Order order = orderService.findById(id).get();
         order.setStatus("Sended");
         orderService.update(order);
@@ -33,6 +36,12 @@ public class OrderController {
 
     @PostMapping("/send/{id}")
     public String setThePackageNumber(@PathVariable Long id, Long packageNumber){
+        if(packageNumber==null || packageNumber < 0){
+            return "/orders/send/"+id;
+        }
+        if(orderService.findById(id).get().getStatus().equals("Sended")){
+            return "/orders/orders";
+        }
         Order order = orderService.findById(id).get();
         order.setPackageNumber(packageNumber);
         orderService.update(order);
@@ -41,6 +50,9 @@ public class OrderController {
 
     @GetMapping("/delete/{id}")
     public String deleteOrder(@PathVariable Long id){
+        if(orderService.findById(id).get().getStatus().equals("Sended")){
+            return "/orders/orders";
+        }
         orderService.deleteById(id);
         return "redirect:/orders/orders";
     }

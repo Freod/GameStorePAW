@@ -22,20 +22,20 @@
         <h2 class="form-signup-heading">Please sign up</h2>
         <p>
             <label for="name">First name</label>
-            <input type="text" id="name" name="name" class="form-control" placeholder="First name" required
+            <input type="text" id="name" name="name" class="form-control" placeholder="First name" value="${user.name}" required
                    autofocus>
         </p>
         <p>
             <label for="surname">Last name</label>
-            <input type="text" id="surname" name="surname" class="form-control" placeholder="Last name" required>
+            <input type="text" id="surname" name="surname" class="form-control" placeholder="Last name" value="${user.surname}" required>
         </p>
         <p>
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Email" value="${user.email}" required>
         </p>
         <p>
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password" value="${user.password}" required>
             <input type="button" onmousedown="showPassword()" onmouseup="hidePassword()" value="Show Password"/>
         </p>
         <button class="btn btn-lg btn-primary btn-block" id="btnSubmit" type="submit">Sign up</button>

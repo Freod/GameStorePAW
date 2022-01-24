@@ -80,4 +80,17 @@ public class Repair {
     public void setPrice(Integer price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "Repair{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", packageNumber=" + packageNumber +
+                ", status='" + status + '\'' +
+                ", price=" + price +
+                ", user=" + user +
+                '}';
+    }
 }
