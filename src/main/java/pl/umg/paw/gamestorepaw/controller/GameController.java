@@ -6,12 +6,16 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.yaml.snakeyaml.util.EnumUtils;
 import pl.umg.paw.gamestorepaw.model.Game;
 import pl.umg.paw.gamestorepaw.model.Platform;
 import pl.umg.paw.gamestorepaw.service.GameService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 @Controller
@@ -43,12 +47,22 @@ public class GameController {
     }
 
     @PostMapping("/add")
-    public String saveGame(Game game, @RequestParam("image") MultipartFile multipartFile) {
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+    public String saveGame(@RequestParam MultipartFile file, Game game){
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         game.setImage(fileName);
-        service.save(game);
-        String uploadDir = "gamesImages/" + game.getId();
-        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+        game = service.saveAndFlush(game);
+        Path currentRelativePath = Paths.get("");
+        String currentPath = currentRelativePath.toAbsolutePath().toString();
+        String uploadDir = currentPath+"/src/main/resources/public/images/" + game.getId()+"/"+game.getImage();
+        File dirPath = new File(uploadDir);
+        if (!dirPath.exists()) {
+            dirPath.mkdirs();
+        }
+        try {
+            file.transferTo(new File(uploadDir));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return "redirect:/games/list";
     }
 
@@ -74,6 +88,7 @@ public class GameController {
         }
     }
 
+    //TODO:SELL
     @GetMapping("/sell")
     public String getSellGameForm(){
         return "/games/sell";
@@ -82,6 +97,5 @@ public class GameController {
     @PostMapping("/sell")
     public void sellGame(Game game){
         System.out.println(game);
-        //TODO:save
     }
 }

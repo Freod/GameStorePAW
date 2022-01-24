@@ -15,9 +15,9 @@
     <div class="row">
         <c:forEach items="${games}" var="game">
             <div class="col-md-6">
-                <div class="row border border-dark m-2">
+                <div class="row border border-dark m-2 mx-">
                     <div class="col-sm-6">
-                        <img src="" alt="error"/>
+                        <img class="img-fluid img-thumbnail" src="/images/${game.id}/${game.image}" alt="fileNotFound"/>
                     </div>
                     <div class="col-sm-6">
                         <p>${game.name}</p>

@@ -21,7 +21,7 @@
                 <th scope="col">First Name</th>
                 <th scope="col">Last Name</th>
                 <th scope="col">Active</th>
-                <th scope="col" colspan="3"></th>
+                <th scope="col" colspan="2"></th>
             </tr>
             </thead>
             <tbody>
@@ -34,7 +34,7 @@
                     <td>${user.active}</td>
                     <td><a href="/users/reset/${user.id}" class="text-primary">Password reset</a></td>
                     <td><a href="/users/edit/${user.id}" class="text-primary">Edit customer</a></td>
-                    <td><a href="/users/delete/${user.id}" class="text-danger">Remove customer</a></td>
+<%--                    <td><a href="/users/delete/${user.id}" class="text-danger">Remove customer</a></td>--%>
                 </tr>
             </c:forEach>
             </tbody>

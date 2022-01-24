@@ -11,7 +11,7 @@
     <jsp:include page="../navbar.jsp"/>
 </div>
 <div class="container-lg content">
-    <form method="post" action="/games/add">
+    <form method="post" action="/games/add" enctype="multipart/form-data">
         <h1>Add game</h1>
         <div class="col-lg-3 col-md-4 p-2">
             <label for="name">Name</label>
@@ -30,8 +30,8 @@
             <input type="number" id="price" name="price" class="form-control" placeholder="Price" required>
         </div>
         <div class="col-lg-3 col-md-4  p-2">
-            <label for="image">Photos: </label>
-            <input type="file" id="image" name="image" accept="image/png, image/jpeg" />
+            <label for="file">Photos: </label>
+            <input type="file" id="file" name="file" accept="image/png, image/jpeg" />
         </div>
         <div class="p-2">
             <button class="btn btn-md btn-dark btn-block" id="btnSubmit" type="submit">Add</button>

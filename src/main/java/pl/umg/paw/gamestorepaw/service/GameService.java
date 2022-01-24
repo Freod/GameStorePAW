@@ -34,4 +34,6 @@ public class GameService {
     }
 
     public List<Game> findAllNotSold(){return repository.findAllNotSold();}
+
+    public Game saveAndFlush(Game game){return repository.save(game);}
 }

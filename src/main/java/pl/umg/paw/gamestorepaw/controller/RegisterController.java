@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import pl.umg.paw.gamestorepaw.model.User;
 import pl.umg.paw.gamestorepaw.service.UserService;
 
+import java.util.regex.Pattern;
+
 @Controller
 public class RegisterController {
     @Autowired
