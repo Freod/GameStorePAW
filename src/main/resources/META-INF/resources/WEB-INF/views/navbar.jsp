@@ -7,7 +7,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav me-auto">
             <sec:authorize url="/games/list">
                 <li class="nav-item">
                     <a class="nav-link" href="/games/list">Games</a>
@@ -41,6 +41,8 @@
                     <a class="nav-link" href="/users/list">Manage users</a>
                 </li>
             </sec:authorize>
+        </ul>
+        <ul class="navbar-nav ms-auto">
             <sec:authorize url="/users/cart">
                 <li class="nav-item">
                     <a class="nav-link" href="/users/cart">
