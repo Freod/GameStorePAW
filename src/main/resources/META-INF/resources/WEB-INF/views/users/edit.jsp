@@ -13,7 +13,11 @@
 <div class="container-lg content">
     <c:forEach items="${users}" var="user">
         <form class="form-signin" id="signupForm" method="post" action="/users/edit/${user.get().id}">
-                <%--<form class="form-signin" id="signupForm" method="post" action="/users/edit">--%>
+            <c:if test="${alert!=null}">
+                <div class="alert alert-danger col-lg-3 col-md-4" role="alert">
+                        ${alert}
+                </div>
+            </c:if>
             <p>
                 <label for="name">First name</label>
                 <input type="text" id="name" name="name" class="form-control" placeholder="First name"

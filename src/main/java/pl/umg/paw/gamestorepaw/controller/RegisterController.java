@@ -23,18 +23,27 @@ public class RegisterController {
     }
 
     @PostMapping(value = "/register")
-    public String getRegister(User user, Model model){
-        if(user.getName().isEmpty() || user.getSurname().isEmpty() || user.getEmail().isEmpty() || user.getPassword().isEmpty()) {
+    public String getRegister(User user, Model model) {
+        if (user.getName().isEmpty() || user.getSurname().isEmpty() || user.getEmail().isEmpty() || user.getPassword().isEmpty()) {
             model.addAttribute("user", user);
+            if (user.getName().isEmpty())
+                model.addAttribute("alert", "First name can't be empty");
+            else if (user.getSurname().isEmpty())
+                model.addAttribute("alert", "Last name can't be empty");
+            else if (user.getEmail().isEmpty())
+                model.addAttribute("alert", "Email can't be empty");
+            else
+                model.addAttribute("alert", "Password can't be empty");
             return "/register";
         }
-        if(user.getId()!=null){
-            user.setId(null);
-        }
-        if(service.findByEmail(user.getEmail()).isPresent()){
+        if (service.findByEmail(user.getEmail()).isPresent()) {
             model.addAttribute("user", user);
             user.setEmail("");
+            model.addAttribute("alert", "Email is used");
             return "/register";
+        }
+        if (user.getId() != null) {
+            user.setId(null);
         }
         user.setActive(true);
         user.setRole("USER");

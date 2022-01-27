@@ -35,12 +35,13 @@ public class OrderController {
     }
 
     @PostMapping("/send/{id}")
-    public String setThePackageNumber(@PathVariable Long id, Long packageNumber){
-        if(packageNumber==null || packageNumber < 0){
-            return "/orders/send/"+id;
-        }
+    public String setThePackageNumber(@PathVariable Long id, Long packageNumber, Model model){
         if(orderService.findById(id).get().getStatus().equals("Sended")){
             return "/orders/orders";
+        }
+        if(packageNumber==null || packageNumber.toString().length()>3 || packageNumber.toString().length()<20){
+            model.addAttribute("alert", "Package number is wrong");
+            return "/orders/send/"+id;
         }
         Order order = orderService.findById(id).get();
         order.setPackageNumber(packageNumber);

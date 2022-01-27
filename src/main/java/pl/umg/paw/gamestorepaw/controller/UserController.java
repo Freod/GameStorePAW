@@ -45,22 +45,28 @@ public class UserController {
     @GetMapping("/list")
     public String getAllUsers(Model model) {
         model.addAttribute("users", userService.findAll());
-        return "/users/list";
+        return "redirect:/users/list";
     }
 
     @GetMapping("/edit/{id}")
     public String getUser(@PathVariable Long id, Model model) {
         model.addAttribute("user", userService.findById(id));
-        return "/users/edit";
+        return "redirect:/users/edit";
     }
 
     @PostMapping("/edit/{id}")
-    public String editUser(@PathVariable Long id, User user) {
-        if(user.getId()==null){
-            return "/users/list";
+    public String editUser(User user, Model model) {
+        if (user.getId() == null) {
+            return "redirect:/users/list";
         }
-        if(user.getName().isEmpty() || user.getSurname().isEmpty() || user.getEmail().isEmpty()) {
-            return "/user/edit/"+user.getId();
+        if (user.getName().isEmpty() || user.getSurname().isEmpty() || user.getEmail().isEmpty()) {
+            if (user.getName().isEmpty())
+                model.addAttribute("alert", "First name can't be empty");
+            else if (user.getSurname().isEmpty())
+                model.addAttribute("alert", "Last name can't be empty");
+            else
+                model.addAttribute("alert", "Email can't be empty");
+            return "redirect:/user/edit/" + user.getId();
         }
         user.setHashedPassword(userService.findById(user.getId()).get().getPassword());
         if (user.getRole() == null)
@@ -83,23 +89,26 @@ public class UserController {
     @GetMapping("/reset/{id}")
     public String getResetPasswordForm(@PathVariable Long id, Model model) {
         model.addAttribute("user", userService.findById(id));
-        return "/users/reset";
+        return "redirect:/users/reset";
     }
 
     @PostMapping("/reset/{id}")
-    public String resetPassword(@PathVariable Long id, String password){
+    public String resetPassword(@PathVariable Long id, String password, Model model) {
         User user = userService.findById(id).get();
-        if(password.isEmpty()){
-            return "/users/reset/"+id;
+        if (password.isEmpty()) {
+            model.addAttribute("alert", "Password can't be empty");
+            return "redirect:/users/reset/" + id;
         }
         try {
             user.setPassword(password);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
+            model.addAttribute("alert", e);
+            return "redirect:/users/reset/" + id;
         } finally {
             userService.save(user);
-            return "/users/list";
         }
+        return "redirect:/users/list";
     }
 
     @GetMapping("/account")
@@ -109,12 +118,12 @@ public class UserController {
         List<Order> order = orderService.findAllByUser(userService.findByEmail(email).get());
         model.addAttribute("orders", order);
         model.addAttribute("repairs", repairService.findAllByUser(userService.findByEmail(email).get()));
-        return "/users/account";
+        return "redirect:/users/account";
     }
 
     @GetMapping("/cart")
     public String getUserCart(Model model, HttpSession session) {
-        model.addAttribute("cart", (ArrayList<Game>) session.getAttribute("cart"));
+        model.addAttribute("cart", session.getAttribute("cart"));
         return "/users/cart";
     }
 

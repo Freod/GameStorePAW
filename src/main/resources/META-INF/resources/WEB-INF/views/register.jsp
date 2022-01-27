@@ -20,6 +20,11 @@
 <div class="container">
     <form class="form-signin" id="signupForm" method="post" action="/register">
         <h2 class="form-signup-heading">Please sign up</h2>
+        <c:if test="${alert!=null}">
+            <div class="alert alert-danger col-lg-3 col-md-4" role="alert">
+                    ${alert}
+            </div>
+        </c:if>
         <p>
             <label for="name">First name</label>
             <input type="text" id="name" name="name" class="form-control" placeholder="First name" value="${user.name}" required

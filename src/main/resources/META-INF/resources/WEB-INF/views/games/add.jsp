@@ -13,6 +13,11 @@
 <div class="container-lg content">
     <form method="post" action="/games/add" enctype="multipart/form-data">
         <h1>Add game</h1>
+        <c:if test="${alert!=null}">
+            <div class="alert alert-danger col-lg-3 col-md-4" role="alert">
+                ${alert}
+            </div>
+        </c:if>
         <div class="col-lg-3 col-md-4 p-2">
             <label for="name">Name</label>
             <input type="text" id="name" name="name" class="form-control" placeholder="Name" value="${game.name}" maxlength="255" required>
@@ -27,7 +32,7 @@
         </div>
         <div class="col-lg-3 col-md-4  p-2">
             <label for="price">Price</label>
-            <input type="number" id="price" name="price" class="form-control" placeholder="Price" value="${game.price}" max="999999" maxlength="4" min="0" required>
+            <input type="number" id="price" name="price" class="form-control" placeholder="Price" value="${game.price}" min="1" max="999999" maxlength="4" min="0" required>
         </div>
         <div class="col-lg-3 col-md-4  p-2">
             <label for="file">Photos: </label>

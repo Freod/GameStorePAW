@@ -12,9 +12,14 @@
 </div>
 <div class="container-lg content">
     <form method="get" action="/services/endSend/${repair.id}">
+        <c:if test="${alert!=null}">
+            <div class="alert alert-danger col-lg-3 col-md-4" role="alert">
+                    ${alert}
+            </div>
+        </c:if>
         <div class="col-lg-3 col-md-4 p-2">
             <label for="packageNumber">Package number</label>
-            <input type="number" id="packageNumber" name="packageNumber" class="form-control" placeholder="Package number" maxlength="30" min="0" required autofocus>
+            <input type="number" id="packageNumber" name="packageNumber" class="form-control" placeholder="Package number" maxlength="20" minlength="3" min="0" required autofocus>
         </div>
         <div class="p-2">
             <button class="btn btn-md btn-dark btn-block" id="btnSubmit" type="submit">Send</button>
