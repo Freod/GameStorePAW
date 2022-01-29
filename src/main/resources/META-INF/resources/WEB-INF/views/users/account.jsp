@@ -36,20 +36,20 @@
             <div class="table-responsive">
                 <table class="table table-bordered border-dark table-light">
                     <thead class="table-dark">
-                    <tr scope="row">
-                        <th scope="col">#</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Package</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Platform</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Total</th>
+                    <tr>
+                        <th>#</th>
+                        <th>Status</th>
+                        <th>Package</th>
+                        <th>Name</th>
+                        <th>Platform</th>
+                        <th>Price</th>
+                        <th>Total</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${orders}" var="order">
                         <c:forEach items="${order.games}" var="game" varStatus="status">
-                            <tr scope="row">
+                            <tr>
                                 <c:choose>
                                     <c:when test="${status.first}">
                                         <td rowspan="${order.games.size()}">${order.id}</td>
@@ -87,18 +87,18 @@
             <div class="table-responsive">
                 <table class="table table-bordered border-dark table-light">
                     <thead class="table-dark">
-                    <tr scope="row">
-                        <th scope="col">#</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Desciption</th>
-                        <th scope="col">Package</th>
-                        <th scope="col"></th>
+                    <tr>
+                        <th>#</th>
+                        <th>Status</th>
+                        <th>Title</th>
+                        <th>Desciption</th>
+                        <th>Package</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${repairs}" var="repair">
-                        <tr scope="row">
+                        <tr>
                             <td>${repair.id}</td>
                             <td>${repair.status}</td>
                             <td>${repair.title}</td>

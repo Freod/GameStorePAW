@@ -14,13 +14,13 @@
         <h1>Service list</h1>
         <table class="table table-bordered border-dark table-light table-hover">
             <thead class="table-dark">
-            <tr scope="row">
-                <th scope="col">Status</th>
-                <th scope="col">Title</th>
-                <th scope="col">Description</th>
-                <th scope="col">Email</th>
-                <th scope="col">Package number</th>
-                <th scope="col"></th>
+            <tr>
+                <th>Status</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Email</th>
+                <th>Package number</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>

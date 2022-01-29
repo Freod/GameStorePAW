@@ -32,7 +32,7 @@
         </div>
         <div class="col-lg-3 col-md-4  p-2">
             <label for="price">Price</label>
-            <input type="number" id="price" name="price" class="form-control" placeholder="Price" value="${game.price}" min="1" max="999999" maxlength="4" min="0" required>
+            <input type="number" id="price" name="price" class="form-control" placeholder="Price" value="${game.price}" min="1" max="999999" min="0" required>
         </div>
         <div class="col-lg-3 col-md-4  p-2">
             <label for="file">Photos: </label>

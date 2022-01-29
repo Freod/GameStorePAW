@@ -45,28 +45,41 @@ public class UserController {
     @GetMapping("/list")
     public String getAllUsers(Model model) {
         model.addAttribute("users", userService.findAll());
-        return "redirect:/users/list";
+        return "/users/list";
     }
 
     @GetMapping("/edit/{id}")
     public String getUser(@PathVariable Long id, Model model) {
+        if(!userService.findById(id).isPresent())
+            return "/users/list";
         model.addAttribute("user", userService.findById(id));
-        return "redirect:/users/edit";
+        return "/users/edit";
     }
 
     @PostMapping("/edit/{id}")
     public String editUser(User user, Model model) {
-        if (user.getId() == null) {
-            return "redirect:/users/list";
+        if (user.getId() == null || !userService.findById(user.getId()).isPresent()) {
+            return "/users/list";
         }
-        if (user.getName().isEmpty() || user.getSurname().isEmpty() || user.getEmail().isEmpty()) {
+        if (user.getName().isEmpty() || user.getName().length() > 255 || user.getSurname().isEmpty() || user.getSurname().length() > 255 || user.getEmail().isEmpty() || user.getEmail().length() > 255 || user.getPassword().isEmpty() || user.getPassword().length() > 40) {
+            model.addAttribute("user", user);
             if (user.getName().isEmpty())
                 model.addAttribute("alert", "First name can't be empty");
+            else if (user.getName().length() > 255)
+                model.addAttribute("alert", "First name length can't more than 255");
             else if (user.getSurname().isEmpty())
                 model.addAttribute("alert", "Last name can't be empty");
-            else
+            else if (user.getSurname().length() > 255)
+                model.addAttribute("alert", "Last name length can't more than 255");
+            else if (user.getEmail().isEmpty())
                 model.addAttribute("alert", "Email can't be empty");
-            return "redirect:/user/edit/" + user.getId();
+            else if (user.getEmail().length() > 255)
+                model.addAttribute("alert", "Email length can't more than 255");
+            else if (user.getPassword().length() > 40)
+                model.addAttribute("alert", "Password length can't more than 40");
+            else
+                model.addAttribute("alert", "Password can't be empty");
+            return getUser(user.getId(), model);
         }
         user.setHashedPassword(userService.findById(user.getId()).get().getPassword());
         if (user.getRole() == null)
@@ -88,23 +101,27 @@ public class UserController {
 
     @GetMapping("/reset/{id}")
     public String getResetPasswordForm(@PathVariable Long id, Model model) {
+        if(!userService.findById(id).isPresent())
+            return "/users/list";
         model.addAttribute("user", userService.findById(id));
-        return "redirect:/users/reset";
+        return "/users/reset";
     }
 
     @PostMapping("/reset/{id}")
     public String resetPassword(@PathVariable Long id, String password, Model model) {
+        if(!userService.findById(id).isPresent())
+            return "/users/list";
         User user = userService.findById(id).get();
         if (password.isEmpty()) {
             model.addAttribute("alert", "Password can't be empty");
-            return "redirect:/users/reset/" + id;
+            return "/users/reset/" + id;
         }
         try {
             user.setPassword(password);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
             model.addAttribute("alert", e);
-            return "redirect:/users/reset/" + id;
+            getResetPasswordForm(user.getId(), model);
         } finally {
             userService.save(user);
         }
@@ -118,7 +135,7 @@ public class UserController {
         List<Order> order = orderService.findAllByUser(userService.findByEmail(email).get());
         model.addAttribute("orders", order);
         model.addAttribute("repairs", repairService.findAllByUser(userService.findByEmail(email).get()));
-        return "redirect:/users/account";
+        return "/users/account";
     }
 
     @GetMapping("/cart")
@@ -164,6 +181,9 @@ public class UserController {
 
     @GetMapping("/addToCart/{id}")
     public String addGameToCart(@PathVariable Long id, HttpSession session) {
+        if(!gameService.findById(id).isPresent()){
+            return "../../games/list";
+        }
         Game game = gameService.findById(id).get();
         List<Game> cart = (ArrayList<Game>) session.getAttribute("cart");
         if (cart == null) {

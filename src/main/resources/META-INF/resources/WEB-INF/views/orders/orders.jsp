@@ -14,14 +14,14 @@
     <div class="table-responsive">
         <table class="table table-bordered border-dark table-light">
             <thead class="table-dark">
-            <tr scope="row">
-                <th scope="col">#</th>
-                <th scope="col">Email</th>
-                <th scope="col">Status</th>
-                <th scope="col">Name</th>
-                <th scope="col">Platform</th>
-                <th scope="col">Price</th>
-                <th scope="col" colspan="2"></th>
+            <tr>
+                <th>#</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Name</th>
+                <th>Platform</th>
+                <th>Price</th>
+                <th colspan="2"></th>
             </tr>
             </thead>
             <tbody>

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +41,7 @@
         </p>
         <p>
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Password" value="${user.password}" required>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
             <input type="button" onmousedown="showPassword()" onmouseup="hidePassword()" value="Show Password"/>
         </p>
         <button class="btn btn-lg btn-primary btn-block" id="btnSubmit" type="submit">Sign up</button>

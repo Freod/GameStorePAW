@@ -14,7 +14,7 @@ public class Game {
     @Column(name="game_platform")
     private String platform;
     @Column(name="game_price")
-    private double price;
+    private Integer price;
     @Column(name = "game_image")
     private String image;
 
@@ -42,11 +42,11 @@ public class Game {
         this.platform = platform;
     }
 
-    public double getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
@@ -58,7 +58,7 @@ public class Game {
         this.image = image;
     }
 
-    public Game(Long id, String name, String platform, double price, String image) {
+    public Game(Long id, String name, String platform, Integer price, String image) {
         this.id = id;
         this.name = name;
         this.platform = platform;

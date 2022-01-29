@@ -55,22 +55,29 @@ public class GameController {
 
     @PostMapping("/add")
     public String saveGame(@RequestParam MultipartFile file, Game game, Model model) {
-        if (game.getName().isEmpty() || game.getPlatform().isEmpty() || game.getPrice() < 1 || game.getPrice() > 999999) {
+        if (game.getName().isEmpty() || game.getName().length()>255 || game.getPlatform().isEmpty() || game.getPlatform().length()>255 || game.getPrice()==null || game.getPrice()<1 || game.getPrice() > 999999) {
             List<Platform> platforms = Arrays.asList(Platform.values());
             model.addAttribute("platforms", platforms);
             model.addAttribute("game", game);
             if (game.getName().isEmpty())
                 model.addAttribute("alert", "Name can't be empty");
-            else if (game.getPlatform().isEmpty())
+            else if(game.getName().length()>255){
+                model.addAttribute("alert", "Name length can't be more than 255.");
+            }
+            else if (game.getPlatform().isEmpty() || game.getPlatform().length()>255)
                 model.addAttribute("alert", "Platform can't be empty");
             else
                 model.addAttribute("alert", "Price range is between 1 and 999999");
-            return "/games/add";
+            return getSaveGameForm(model);
         }
         if (game.getId() != null) {
             game.setId(null);
         }
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        if(fileName.length() > 255){
+            model.addAttribute("alert", "Filename is too long");
+            return getSaveGameForm(model);
+        }
         game.setImage(fileName);
         game = service.saveAndFlush(game);
         Path currentRelativePath = Paths.get("");
@@ -87,37 +94,4 @@ public class GameController {
         }
         return "redirect:/games/list";
     }
-
-//    @GetMapping("/update/{id}")
-//    public String getUpdateGameForm(@PathVariable Long id) {
-//        service.findById(id);
-//        return "/games/add";
-//    }
-
-//    @PostMapping("/update")
-//    public void updateGame(Game game) {
-//        //TODO:UPDATE
-//        System.out.println(game);
-////        service.update(game);
-//    }
-
-//    @GetMapping("/delete/{id}")
-//    public void deleteGame(@PathVariable Long id) {
-//        if (service.findById(id).isPresent()) {
-//            System.out.println("delete by " + id);
-//            //TODO:DELETE
-////            service.deleteById(id);
-//        }
-//    }
-
-//    //TODO:SELL
-//    @GetMapping("/sell")
-//    public String getSellGameForm(){
-//        return "/games/sell";
-//    }
-
-//    @PostMapping("/sell")
-//    public void sellGame(Game game){
-//        System.out.println(game);
-//    }
 }
